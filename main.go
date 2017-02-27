@@ -1,38 +1,31 @@
 package main
 
 import (
-    "fmt"
-    "log"
     gc "github.com/rthornton128/goncurses"
 )
 
 func main() {
-    stdscr, err := gc.Init()
-	if err != nil {
-		log.Fatal("init:", err)
-	}
-	defer gc.End()
+    var b1, b2 Buffer
+    b1.path = "/"
+    b2.path = "/"
 
-    files := ReadDir("/home/")
+    AddPathsToBuffer(&b1)
+    AddPathsToBuffer(&b2)
 
-    rows, _ := stdscr.MaxYX()
+    LeftWindow.buffer = &b1
+    RightWindow.buffer = &b2
 
-    for i, f := range files {
-        s := fmt.Sprintf("%10d %s", f.Size(), f.Name())
-        stdscr.MovePrint(i, 12, s)
+    InitTerm()
 
-        if i > rows - 5 {
-            break
+    PrintWindow(&LeftWindow)
+    PrintWindow(&RightWindow)
+
+    for {
+        gc.Update()
+
+        switch Term.win.GetChar() {
+        case 'q':
+            return
         }
     }
-
-	for {
-		gc.Update()
-		ch := stdscr.GetChar()
-
-		switch gc.KeyString(ch) {
-		case "q":
-			return
-		}
-	}
 }
