@@ -22,6 +22,7 @@ func main() {
     InitTerm()
 
     gc.Echo(false)
+    gc.Cursor(0)
     defer gc.End()
 
     if err := gc.StartColor(); err != nil {
@@ -48,6 +49,9 @@ func main() {
             ActiveWindow.buffer.sel--
         case 'e':
             UpdateBufferPath(ActiveWindow.buffer)
+            AddPathsToBuffer(ActiveWindow.buffer)
+        case 'j':
+            Jump(ActiveWindow.buffer)
             AddPathsToBuffer(ActiveWindow.buffer)
         }
     }
