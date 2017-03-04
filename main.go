@@ -56,6 +56,8 @@ func main() {
             AddPathsToBuffer(ActiveWindow.buffer)
         case 'o':
             SwitchWindows(ActiveWindow)
+		case 'r':
+			MoveToCentre(ActiveWindow.buffer)
         }
     }
 }
