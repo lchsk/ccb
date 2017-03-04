@@ -8,7 +8,7 @@ import (
 
 func main() {
     var b1, b2 Buffer
-    b1.path = "/"
+    b1.path = "/home"
     b2.path = "/"
 
     AddPathsToBuffer(&b1)
@@ -31,6 +31,7 @@ func main() {
 
     gc.InitPair(1, gc.C_WHITE, gc.C_BLACK)
     gc.InitPair(2, gc.C_WHITE, gc.C_BLUE)
+    gc.InitPair(3, gc.C_BLUE, gc.C_BLACK) // Dirs
 
     for {
         PrintWindow(&LeftWindow)
@@ -44,15 +45,17 @@ func main() {
         case 'q':
             return
         case 'n':
-            ActiveWindow.buffer.sel++
+			MoveDown(ActiveWindow)
         case 'p':
-            ActiveWindow.buffer.sel--
+            MoveUp(ActiveWindow)
         case 'e':
             UpdateBufferPath(ActiveWindow.buffer)
             AddPathsToBuffer(ActiveWindow.buffer)
         case 'j':
             Jump(ActiveWindow.buffer)
             AddPathsToBuffer(ActiveWindow.buffer)
+        case 'o':
+            SwitchWindows(ActiveWindow)
         }
     }
 }
