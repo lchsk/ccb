@@ -58,6 +58,10 @@ func main() {
             SwitchWindows(ActiveWindow)
 		case 'r':
 			MoveToCentre(ActiveWindow.buffer)
+		case 'V':
+			MoveUpPage(ActiveWindow)
+        case 'v':
+            MoveDownPage(ActiveWindow)
         }
     }
 }
